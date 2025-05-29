@@ -1,0 +1,13 @@
+.notification{
+    background-color: aqua;
+    background-color: aqua;
+    color:blue;
+    color:blue;
+    height: 50px;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+}
