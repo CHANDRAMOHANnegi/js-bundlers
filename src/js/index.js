@@ -4,8 +4,8 @@ import {
   removeTodoEventHandler,
   toggleTodoEventListener,
 } from "./event-handlers.js";
-import '../styles/vendor.scss';
-import "../styles/index.scss"
+import "../styles/vendor.scss";
+import "../styles/index.scss";
 
 window.addEventListener("load", onLoadEventHandler);
 document.addEventListener("change", function (event) {
@@ -17,7 +17,7 @@ document.addEventListener("click", function (event) {
   if (event.target.classList.contains("delete")) {
     removeTodoEventHandler(event);
   }
-  if (event.target.classList.contains("real-checkbox")) {
+  if ((event.target.dataset.element = "real-checkbox")) {
     toggleTodoEventListener(event);
   }
 });
