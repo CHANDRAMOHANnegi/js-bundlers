@@ -2,7 +2,7 @@ const common = require("./webpack.common.config.js");
 const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizePlugin = require("css-minimizer-webpack-plugin");
-const {PurgeCSSPlugin} = require("purgecss-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const glob = require("glob");
 const path = require("path");
 
@@ -79,6 +79,46 @@ module.exports = merge(common, {
           "sass-loader",
         ],
       },
+
+      {
+        test: /\.(png|jpe?g|gif|svg|webp)$/,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10kb //
+            // if size is less than 10kb, it will be inlined as a base64 string
+            // else it will be emitted as a separate file in the output directory
+          },
+        },
+        generator: {
+          filename: "./images/[name][contenthash:12][ext]",
+          // keeps the original file name and extension
+        },
+        use: [
+          {
+            loader: "image-webpack-loader",
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 40,
+              },
+              // optipng: {
+              //   enabled: false, // OptiPNG is not used
+              // },
+              pngquant: {
+                quality: [0.65, 0.9],
+                speed: 4,
+              },
+              // gifsicle: {
+              //   interlaced: false,
+              // },
+              // webp: {
+              //   quality: 75,
+              // },
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -87,7 +127,9 @@ module.exports = merge(common, {
     }),
     new PurgeCSSPlugin({
       paths: (context) => {
-        return glob.sync(`${path.join(__dirname,'.../src')}/**/*`, { nodir: true });
+        return glob.sync(`${path.join(__dirname, ".../src")}/**/*`, {
+          nodir: true,
+        });
       },
       // safelist: {
       //   standard: [

@@ -34,6 +34,8 @@
     "jss":"10.10.0",
     "jss-preset-default": "10.10.0",
 
-    "@emotion/css": "11.11.0"
+    "@emotion/css": "11.11.0",
+
+    "image-webpack-loader":"8.1.0"
   }
 }

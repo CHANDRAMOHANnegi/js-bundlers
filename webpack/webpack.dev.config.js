@@ -74,6 +74,22 @@ module.exports = merge(common, {
         // 2. css-loader interprets @import and url() like import/require() and will resolve them.  
         // 3. style-loader injects styles into the DOM.
       },
+
+      {
+        test: /\.(png|jpe?g|gif|svg|webp)$/,
+        type: "asset",
+        parser:{
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10kb // 
+            // if size is less than 10kb, it will be inlined as a base64 string 
+            // else it will be emitted as a separate file in the output directory
+          },
+        },
+        generator: {
+          filename: "./images/[name][ext]",
+          // keeps the original file name and extension
+        },
+      },
     ],
   },
 
