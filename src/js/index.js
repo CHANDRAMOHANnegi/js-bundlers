@@ -4,7 +4,8 @@ import {
   removeTodoEventHandler,
   toggleTodoEventListener,
 } from "./event-handlers.js";
-import "../styles/index.css"
+import '../styles/vendor.scss';
+import "../styles/index.scss"
 
 window.addEventListener("load", onLoadEventHandler);
 document.addEventListener("change", function (event) {

@@ -2,6 +2,9 @@ const common = require("./webpack.common.config.js");
 const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizePlugin = require("css-minimizer-webpack-plugin");
+const {PurgeCSSPlugin} = require("purgecss-webpack-plugin");
+const glob = require("glob");
+const path = require("path");
 
 module.exports = merge(common, {
   mode: "production",
@@ -49,11 +52,55 @@ module.exports = merge(common, {
           },
         ],
       },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            // options: {
+            //   importLoaders: 1,
+            // },
+          },
+          "less-loader",
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            // options: {
+            //   importLoaders: 1,
+            // },
+          },
+          "postcss-loader",
+          "sass-loader",
+        ],
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash:12].css",
+    }),
+    new PurgeCSSPlugin({
+      paths: (context) => {
+        return glob.sync(`${path.join(__dirname,'.../src')}/**/*`, { nodir: true });
+      },
+      // safelist: {
+      //   standard: [
+      //     "alert",
+      //     "alert-success",
+      //     "notification",
+      //     "custom-checkbox",
+      //     "check",
+      //     "real-checkbox",
+      //     "todo-list",
+      //     "new-todo",
+      //   ],
+      // },
     }),
   ],
 });

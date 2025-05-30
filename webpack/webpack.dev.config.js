@@ -36,21 +36,44 @@ module.exports = merge(common, {
         // css-loader interprets @import and url() like import/require() and will resolve them.
       },
       {
-              test: /\.css$/,
-              include: /\.module\.css$/,
-              use: [
-                'style-loader',
-                {
-                  loader: "css-loader",
-                  options: {
-                    modules: {
-                      localIdentName: "[local]--[md4:hash:7]",
-                      // exportLocalsConvention: "camelCase",
-                    },
-                  },
-                },
-              ],
+        test: /\.css$/,
+        include: /\.module\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[local]--[md4:hash:7]",
+                // exportLocalsConvention: "camelCase",
+              },
             },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            // options: {
+            //   importLoaders: 1,
+            // },
+          },
+          "less-loader",
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+        // order of loaders matters: right to left or bottom to top
+        // sass-loader -> css-loader -> style-loader
+        // This means:  
+        // 1. sass-loader compiles Sass to CSS.
+        // 2. css-loader interprets @import and url() like import/require() and will resolve them.  
+        // 3. style-loader injects styles into the DOM.
+      },
     ],
   },
 

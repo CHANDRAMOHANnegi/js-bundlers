@@ -1,0 +1,25 @@
+Autoprefixer is a PostCSS plugin that automatically adds vendor prefixes 
+(like -webkit-, -moz-, -ms-, -o-) to your CSS rules,
+ based on the browsers you want to support (as defined in your .browserslistrc file). 
+This helps your CSS work correctly across different browsers without manually writing all the prefixes.
+
+Example:
+
+If you write this CSS:
+
+.user-select {
+  user-select: none;
+}
+
+Autoprefixer will output:
+
+.user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+Summary:
+Autoprefixer saves you time and ensures cross-browser compatibility
+by automatically adding the necessary vendor prefixes to your CSS.

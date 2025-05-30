@@ -33,11 +33,18 @@ export function getTodoId(element) {
 }
 
 function showNotification() {
-  console.log(styles);
-  const notification = `<div class="${styles.notification}"> Todo item added </div>`;
-  document.body.innerHTML += notification;
-  setTimeout(() => {
-    // const notificationElement = document.querySelector(`.${styles.notification}`)
-    // notificationElement.parentNode.removeChild(notificationElement)
-  }, 2000);
+  // console.log(styles);
+  // const notification = `<div class="${styles.notification}"> Todo item added </div>`;
+  // document.body.innerHTML += notification;
+
+  const notification = document.createElement("div");
+  notification.classList.add("alert", "alert-success",styles.notification);
+  notification.setAttribute("role", "alert");
+  notification.innerHTML = "Todo item added";
+  document.body.appendChild(notification);
+
+  // setTimeout(() => {
+  //   const notificationElement = document.querySelector(`.${styles.notification}`)
+  //   notificationElement.parentNode.removeChild(notificationElement)
+  // }, 2000);
 }
