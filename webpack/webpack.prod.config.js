@@ -3,6 +3,7 @@ const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizePlugin = require("css-minimizer-webpack-plugin");
 const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const glob = require("glob");
 const path = require("path");
 
@@ -25,6 +26,38 @@ module.exports = merge(common, {
               // normalizeUrl: false,
             },
           ],
+        },
+      }),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ["imagemin-mozjpeg", { quality: 40, progressive: true }],
+              ["imagemin-pngquant", { quality: [0.65, 0.9], speed: 4 }],
+              ["imagemin-gifsicle", { interlaced: false }],
+              [
+                "imagemin-svgo",
+                {
+                  plugins: [
+                    {
+                      name: "preset-default",
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          addAttributes: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+              ["imagemin-optipng", { optimizationLevel: 5 }],
+              ["imagemin-webp", { quality: 75 }],
+            ],
+          },
         },
       }),
     ],
@@ -94,30 +127,30 @@ module.exports = merge(common, {
           filename: "./images/[name][contenthash:12][ext]",
           // keeps the original file name and extension
         },
-        use: [
-          {
-            loader: "image-webpack-loader",
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 40,
-              },
-              // optipng: {
-              //   enabled: false, // OptiPNG is not used
-              // },
-              pngquant: {
-                quality: [0.65, 0.9],
-                speed: 4,
-              },
-              // gifsicle: {
-              //   interlaced: false,
-              // },
-              // webp: {
-              //   quality: 75,
-              // },
-            },
-          },
-        ],
+        // use: [
+        //   {
+        //     loader: "image-webpack-loader",
+        //     options: {
+        //       mozjpeg: {
+        //         progressive: true,
+        //         quality: 40,
+        //       },
+        //       // optipng: {
+        //       //   enabled: false, // OptiPNG is not used
+        //       // },
+        //       pngquant: {
+        //         quality: [0.65, 0.9],
+        //         speed: 4,
+        //       },
+        //       // gifsicle: {
+        //       //   interlaced: false,
+        //       // },
+        //       // webp: {
+        //       //   quality: 75,
+        //       // },
+        //     },
+        //   },
+        // ],
       },
     ],
   },
@@ -127,7 +160,7 @@ module.exports = merge(common, {
     }),
     new PurgeCSSPlugin({
       paths: (context) => {
-        return glob.sync(`${path.join(__dirname, ".../src")}/**/*`, {
+        return glob.sync(`${path.join(__dirname, "../src")}/**/*`, {
           nodir: true,
         });
       },

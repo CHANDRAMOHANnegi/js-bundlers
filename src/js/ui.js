@@ -3,9 +3,9 @@ import CheckMarkImage from "../../images/checkmark.svg";
 
 console.log(CheckMarkImage);
 
-
 import jss from "jss";
 import preset from "jss-preset-default";
+import { getMotivationalImages } from "./api";
 jss.setup(preset());
 
 const checkboxSize = "30px";
@@ -40,6 +40,7 @@ export function renderTodos(todos) {
         `;
   });
   document.querySelector(".todo-list").innerHTML = renderedItemArray.join("");
+  renderMotivationalImages();
 }
 
 export function clearNewTodoInput() {
@@ -71,4 +72,22 @@ function showNotification() {
   //   const notificationElement = document.querySelector(`.${styles.notification}`)
   //   notificationElement.parentNode.removeChild(notificationElement)
   // }, 2000);
+}
+
+function renderMotivationalImages(images) {
+  getMotivationalImages().then((images) => {
+    const motivationalPicturesHtml = `
+                <div class="motivational-pictures">
+                ${images
+                  .map(
+                    (image) =>
+                      `<img src="${image}" alt="Motivational Image" class="motivational-image">`
+                  )
+                  .join("")}
+                </div>
+            `;
+
+    document.querySelector(".motivational-pictures-container").innerHTML =
+      motivationalPicturesHtml;
+  });
 }
