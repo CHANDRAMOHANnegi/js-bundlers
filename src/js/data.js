@@ -17,8 +17,14 @@ export function removeTodo(id) {
 }
 
 export function updateTodo(id, completed) {
+  if(!id || typeof completed !== 'boolean') {
+    console.error('Invalid parameters for updateTodo:', id, completed);
+    return;
+  }
   const itemIndex = data.findIndex(function (value) {
     return value.id === id;
   });
+  console.log(id,completed,itemIndex,data);
+  
   data[itemIndex].completed = completed;
 }

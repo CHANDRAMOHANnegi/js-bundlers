@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.config.js",
-    "dev": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.config.js --hot"
+    "dev": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.config.js --hot",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,6 @@
   "description": "",
   "dependencies": {
     "lodash": "^4.17.21"
-
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
@@ -49,7 +49,8 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1",
     "webpack-merge": "^6.0.1",
-
-    "@babel/plugin-proposal-pipeline-operator": "7.27.1"
+    "@babel/plugin-proposal-pipeline-operator": "7.27.1",
+    "@babel/preset-typescript": "7.22.5",
+    "typescript": "5.3.3"
   }
 }
