@@ -1,4 +1,5 @@
 import {
+  confirmRemoveEventHandler,
   newTodoEventHandler,
   onLoadEventHandler,
   removeTodoEventHandler,
@@ -19,5 +20,8 @@ document.addEventListener("click", function (event) {
   }
   if ((event.target.dataset.element = "real-checkbox")) {
     toggleTodoEventListener(event);
+  }
+  if (event.target.id === "modal-delete-button") {
+    confirmRemoveEventHandler(event);
   }
 });

@@ -6,14 +6,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.config.js",
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.config.js --hot",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "bundle-analyzer": "NODE_ENV=production webpack --config webpack/webpack.analyze.config.js "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash-es": "4.17.21",
+    "jquery": "3.7.1",
+    "bootstrap": "5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
@@ -21,7 +24,6 @@
     "@emotion/css": "11.11.0",
     "autoprefixer": "10.4.14",
     "babel-loader": "^9.1.2",
-    "bootstrap": "5.3.6",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "13.0.0",
     "core-js": "^3.42.0",
@@ -51,6 +53,7 @@
     "webpack-merge": "^6.0.1",
     "@babel/plugin-proposal-pipeline-operator": "7.27.1",
     "@babel/preset-typescript": "7.22.5",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "webpack-bundle-analyzer": "4.10.2"
   }
 }

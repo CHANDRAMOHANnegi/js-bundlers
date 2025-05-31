@@ -51,8 +51,8 @@ export function clearNewTodoInput() {
 export function getTodoId(element) {
   return parseInt(
     element.dataset.id ||
-      element.parentNode.dataset.id ||
-      element.parentNode.parentNode.dataset.id,
+      element.parentNode.dataset?.id ||
+      element.parentNode.parentNode.dataset?.id,
     10
   );
 }

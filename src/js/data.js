@@ -1,6 +1,6 @@
 import initialData from "../todos.json";
 
-const data = initialData;
+let data = initialData;
 
 export function getAllTodos() {
   return data;
@@ -17,6 +17,8 @@ export function removeTodo(id) {
 }
 
 export function updateTodo(id, completed) {
+  console.log({id});
+  
   if(!id || typeof completed !== 'boolean') {
     console.error('Invalid parameters for updateTodo:', id, completed);
     return;

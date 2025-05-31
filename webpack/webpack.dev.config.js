@@ -9,6 +9,7 @@ module.exports = merge(common, {
     filename: "bundle.js",
   },
 
+  devtool: "eval-source-map", // Generates source maps for easier debugging
   // ...existing code...
   devServer: {
     port: 8000,
@@ -69,19 +70,19 @@ module.exports = merge(common, {
         use: ["style-loader", "css-loader", "sass-loader"],
         // order of loaders matters: right to left or bottom to top
         // sass-loader -> css-loader -> style-loader
-        // This means:  
+        // This means:
         // 1. sass-loader compiles Sass to CSS.
-        // 2. css-loader interprets @import and url() like import/require() and will resolve them.  
+        // 2. css-loader interprets @import and url() like import/require() and will resolve them.
         // 3. style-loader injects styles into the DOM.
       },
 
       {
         test: /\.(png|jpe?g|gif|svg|webp)$/,
         type: "asset",
-        parser:{
+        parser: {
           dataUrlCondition: {
-            maxSize: 10 * 1024, // 10kb // 
-            // if size is less than 10kb, it will be inlined as a base64 string 
+            maxSize: 10 * 1024, // 10kb //
+            // if size is less than 10kb, it will be inlined as a base64 string
             // else it will be emitted as a separate file in the output directory
           },
         },

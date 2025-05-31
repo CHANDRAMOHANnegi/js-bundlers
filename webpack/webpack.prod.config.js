@@ -12,6 +12,7 @@ module.exports = merge(common, {
   output: {
     filename: "js/[name].[contenthash:12].js",
   },
+  devtool: "source-map", // Generates source maps for easier debugging
   optimization: {
     minimize: true,
     minimizer: [
@@ -72,6 +73,71 @@ module.exports = merge(common, {
         ],
       }),
     ],
+    splitChunks: {
+      chunks: "all",
+      maxSize: Infinity, // 140kb
+      minSize: 2000, // 10kb
+      cacheGroups: {
+        jquery: {
+          test: /[\\/]node_modules[\\/](jquery)[\\/]/,
+          name: "jquery",
+          chunks: "all",
+          priority: 2, // Higher priority than default
+        },
+        lodash: {
+          test: /[\\/]node_modules[\\/](lodash-es)[\\/]/,
+          name: "lodash-es",
+          chunks: "all",
+          priority: 2, // Higher priority than default
+        },
+        // bootstrap: {
+        //   test: /[\\/]node_modules[\\/](bootstrap)[\\/]/,
+        //   name: "bootstrap",
+        //   // chunks: "all",
+        //   priority: 1, // Higher priority than default
+        // },
+        node_modules: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "node_modules",
+          // name(module, chunks, cacheGroupKey) {
+          //   // Use the module's context to create a unique name
+          //   const packageName = module.context.match(/node_modules[\\/](.*?)([\\/]|$)/)[1];
+          //   return packageName;
+          // },
+          chunks: "all",
+          // priority: -10, // Lower priority than default
+        },
+        async: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module, chunks, cacheGroupKey) {
+            // Use the module's context to create a unique name
+           return chunks
+              .map((chunk) => chunk.name)
+              .join("-") + `-${cacheGroupKey}`;
+          },
+          chunks: "async",
+          // priority: -20, // Lower priority than default
+        },
+
+        // node_modules: {
+        //   test: /[\\/]node_modules[\\/]/,
+        //   name(module, chunks, cacheGroupKey) {
+        //     // Use the module's context to create a unique name
+        //    const packageName = module.context.match(/node_modules[\\/](.*?)([\\/]|$)/)[1];
+        //    return packageName
+        //   }
+        //   // chunks: "all",
+        //   // priority: -10, // Lower priority than default
+        // },
+      },
+      // maxAsyncRequests: 30,
+      // maxInitialRequests: 30,
+      // name: (module, chunks, cacheGroupKey) => {
+      //   // Use the module's context to create a unique name
+      //   const allChunksNames = module.identifier().split("/");
+      //   return allChunksNames[allChunksNames.length - 1];
+      // },
+    },
   },
   module: {
     rules: [
