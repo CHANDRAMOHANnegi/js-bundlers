@@ -9,8 +9,10 @@ const path = require("path");
 
 module.exports = merge(common, {
   mode: "production",
+  entry: "./src/js/index.js",
   output: {
     filename: "js/[name].[contenthash:12].js",
+    publicPath: "/static/", // Ensures that the output files are served from the /static/ directory
   },
   devtool: "source-map", // Generates source maps for easier debugging
   optimization: {
@@ -111,9 +113,9 @@ module.exports = merge(common, {
           test: /[\\/]node_modules[\\/]/,
           name(module, chunks, cacheGroupKey) {
             // Use the module's context to create a unique name
-           return chunks
-              .map((chunk) => chunk.name)
-              .join("-") + `-${cacheGroupKey}`;
+            return (
+              chunks.map((chunk) => chunk.name).join("-") + `-${cacheGroupKey}`
+            );
           },
           chunks: "async",
           // priority: -20, // Lower priority than default

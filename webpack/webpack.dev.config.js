@@ -2,13 +2,16 @@ const path = require("path");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.config.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 
 module.exports = merge(common, {
   mode: "development",
+  entry: "./src/js/index-dev.js",
+
   output: {
     filename: "bundle.js",
+    publicPath: "/static/", // Ensures that the output files are served from the /static/ directory
   },
-
   devtool: "eval-source-map", // Generates source maps for easier debugging
   // ...existing code...
   devServer: {
@@ -93,6 +96,10 @@ module.exports = merge(common, {
       },
     ],
   },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(), // Enables Hot Module Replacement (HMR)
+  ],
 
   // ...existing code...
 });
