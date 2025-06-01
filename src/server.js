@@ -1,4 +1,5 @@
 const express = require("express");
+const expressStaticGzip = require("express-static-gzip");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require("path");
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
   res.sendFile(absolutePathToHtmlFile);
 });
 
-app.use("/static", express.static(path.join(__dirname, "../dist")));
+app.use("/static", expressStaticGzip(path.join(__dirname, "../dist")));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

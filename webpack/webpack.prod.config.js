@@ -6,6 +6,7 @@ const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const glob = require("glob");
 const path = require("path");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -243,6 +244,7 @@ module.exports = merge(common, {
           nodir: true,
         });
       },
+   
       // safelist: {
       //   standard: [
       //     "alert",
@@ -256,5 +258,13 @@ module.exports = merge(common, {
       //   ],
       // },
     }),
+       new CompressionPlugin({
+        // filename: "[path][base].gz",
+        algorithm: "gzip",
+        test: /\.(js|css)$/,
+        // threshold: 10240, // Only assets bigger than this size will be processed
+        // minRatio: 0.8, // Only assets that compress better than this ratio will be processed
+      }),
+
   ],
 });
